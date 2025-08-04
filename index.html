@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Essential Guide to Common Stock</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Brilliant Blues -->
+    <!-- Application Structure Plan: A top-down narrative infographic. It starts with a simple "What is it?" hook, then flows logically into key concepts: 1) What you get (Rights), 2) The two main types (Comparison), 3) How you earn money (Returns), 4) The biggest risk (Liquidation), and 5) How it's made (IPO). This structure guides a novice user through the most critical information in a story-like progression, making it easy to digest. -->
+    <!-- Visualization & Content Choices:
+        - Report Info: Definition -> Goal: Inform -> Viz: Large, bold typography. Justification: Creates a strong visual anchor. Method: HTML/CSS.
+        - Report Info: Shareholder Rights -> Goal: Organize -> Viz: A grid of cards with Unicode icons. Justification: Breaks down a list of rights into visually distinct, easy-to-read chunks. Method: HTML/CSS.
+        - Report Info: Common vs. Preferred -> Goal: Compare -> Viz: Side-by-side comparison cards. Justification: A direct, clear way to highlight key differences. Method: HTML/CSS.
+        - Report Info: Returns (Capital Gains vs. Dividends) -> Goal: Compare -> Viz: Donut chart. Justification: Effectively shows the proportional difference in return sources for Growth vs. Income stocks. Library: Chart.js.
+        - Report Info: Liquidation Priority -> Goal: Organize -> Viz: Vertical flowchart. Justification: Intuitively shows the top-to-bottom hierarchy of claims. Method: HTML/CSS with borders.
+        - Report Info: IPO Process -> Goal: Change -> Viz: A simplified timeline. Justification: Visualizes a sequence of events clearly. Method: HTML/CSS.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+            color: #001219;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-width: 450px;
+            }
+        }
+        .gradient-bg {
+            background-image: linear-gradient(135deg, #0A9396, #005F73);
+        }
+        .step-connector::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 2rem;
+            background-color: #94D2BD;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <main class="container mx-auto px-4 py-8 md:py-16">
+
+        <section class="text-center mb-16 md:mb-24">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-[#005F73] mb-4">What is Common Stock?</h1>
+            <p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-600">Think of it as buying a small piece of a company. It's a share of ownership that gives you a claim on the company's future success and a say in how it's run.</p>
+        </section>
+
+        <section class="mb-16 md:mb-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Your Rights as an Owner</h2>
+                <p class="mt-2 text-gray-600 max-w-2xl mx-auto">Ownership comes with a set of powerful rights that protect your investment and give you influence.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-[#0A9396]">
+                    <div class="text-3xl mb-3">🗳️</div>
+                    <h3 class="font-bold text-xl mb-2">Voting Power</h3>
+                    <p class="text-gray-600">Elect the board of directors and vote on major decisions like mergers. It's your voice in the company's future.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-[#0A9396]">
+                    <div class="text-3xl mb-3">💰</div>
+                    <h3 class="font-bold text-xl mb-2">Claim to Profits</h3>
+                    <p class="text-gray-600">Receive a share of the company's profits in the form of dividends, if the board decides to pay them.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-[#0A9396]">
+                    <div class="text-3xl mb-3">🔄</div>
+                    <h3 class="font-bold text-xl mb-2">Right to Sell</h3>
+                    <p class="text-gray-600">Freely sell your shares on stock exchanges like the NYSE or NASDAQ, turning your investment into cash.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 md:mb-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Common vs. Preferred Stock</h2>
+                <p class="mt-2 text-gray-600 max-w-2xl mx-auto">Companies issue two main flavors of stock. They offer a classic trade-off between control and stability.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-[#005F73] mb-4">Common Stock</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Has voting rights</li>
+                        <li class="flex items-start"><span class="text-red-500 mr-2">✗</span> Dividends are not guaranteed</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Unlimited growth potential</li>
+                        <li class="flex items-start"><span class="text-red-500 mr-2">✗</span> Last in line if company fails</li>
+                    </ul>
+                </div>
+                <div class="border-t md:border-t-0 md:border-l border-gray-200 mt-6 pt-6 md:mt-0 md:pt-0 md:pl-8">
+                    <h3 class="text-2xl font-bold text-[#0A9396] mb-4">Preferred Stock</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start"><span class="text-red-500 mr-2">✗</span> No voting rights</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Fixed, priority dividends</li>
+                        <li class="flex items-start"><span class="text-red-500 mr-2">✗</span> Limited growth potential</li>
+                        <li class="flex items-start"><span class="text-green-500 mr-2">✓</span> Paid before common stockholders</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 md:mb-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">How You Make Money</h2>
+                <p class="mt-2 text-gray-600 max-w-2xl mx-auto">Returns come from two sources: the stock's price increasing (capital gains) and the company sharing profits (dividends).</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
+                <div class="text-center md:text-left">
+                    <h3 class="text-2xl font-bold text-[#005F73] mb-4">Growth vs. Income</h3>
+                    <p class="text-gray-600 mb-4"><strong>Growth stocks</strong> (like tech startups) reinvest profits to grow fast. Your main return comes from the stock price soaring.</p>
+                    <p class="text-gray-600"><strong>Income stocks</strong> (like established utility companies) are mature businesses that pay out regular dividends, providing a steady income stream.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="chart-container">
+                        <canvas id="returns-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 md:mb-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">The Ultimate Risk: Liquidation Priority</h2>
+                <p class="mt-2 text-gray-600 max-w-2xl mx-auto">If a company goes bankrupt, there's a strict pecking order for who gets paid back. As a common stockholder, you're last in line.</p>
+            </div>
+            <div class="max-w-md mx-auto">
+                <div class="relative text-center p-6 bg-white rounded-lg shadow-md step-connector">
+                    <div class="text-2xl font-bold text-green-600">1</div>
+                    <h4 class="font-semibold text-lg">Creditors & Lenders</h4>
+                    <p class="text-sm text-gray-500">Banks and bondholders get paid first.</p>
+                </div>
+                <div class="relative text-center p-6 bg-white rounded-lg shadow-md mt-12 step-connector">
+                    <div class="text-2xl font-bold text-blue-600">2</div>
+                    <h4 class="font-semibold text-lg">Preferred Stockholders</h4>
+                    <p class="text-sm text-gray-500">They are next, receiving their fixed payment.</p>
+                </div>
+                <div class="relative text-center p-6 bg-red-50 text-red-800 border-2 border-red-500 rounded-lg shadow-md mt-12">
+                    <div class="text-2xl font-bold">3</div>
+                    <h4 class="font-semibold text-lg">Common Stockholders</h4>
+                    <p class="text-sm">You get what's left, which is often nothing.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="gradient-bg text-white rounded-xl p-8 md:p-12">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold">From Private to Public: The IPO</h2>
+                <p class="mt-2 opacity-90 max-w-2xl mx-auto">An Initial Public Offering (IPO) is how a private company sells its first-ever shares to the public, raising capital and becoming a traded entity.</p>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center text-center space-y-8 md:space-y-0 md:space-x-4 max-w-5xl mx-auto">
+                <div class="flex-1">
+                    <div class="text-4xl font-bold text-[#E9D8A6]">1</div>
+                    <h4 class="font-semibold mt-2">Planning & Paperwork</h4>
+                    <p class="text-sm opacity-80">The company works with banks and files with the SEC.</p>
+                </div>
+                <div class="text-2xl text-[#94D2BD] hidden md:block">→</div>
+                <div class="flex-1">
+                    <div class="text-4xl font-bold text-[#E9D8A6]">2</div>
+                    <h4 class="font-semibold mt-2">Marketing "Roadshow"</h4>
+                    <p class="text-sm opacity-80">Executives pitch the stock to big investors to gauge interest.</p>
+                </div>
+                <div class="text-2xl text-[#94D2BD] hidden md:block">→</div>
+                <div class="flex-1">
+                    <div class="text-4xl font-bold text-[#E9D8A6]">3</div>
+                    <h4 class="font-semibold mt-2">Shares Issued</h4>
+                    <p class="text-sm opacity-80">The stock begins trading on an exchange like the NYSE or NASDAQ.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-8 border-t border-gray-200">
+        <p class="text-gray-500">This infographic is for educational purposes only and is not financial advice.</p>
+    </footer>
+
+    <script>
+        function wrapText(str) {
+            if (str.length <= 16) {
+                return str;
+            }
+            const words = str.split(' ');
+            let lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + word).length > 16) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            }
+            lines.push(currentLine.trim());
+            return lines;
+        }
+
+        const returnsChartCtx = document.getElementById('returns-chart').getContext('2d');
+        new Chart(returnsChartCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Capital Gains', 'Dividends'],
+                datasets: [{
+                    label: 'Growth Stock',
+                    data: [85, 15],
+                    backgroundColor: ['#005F73', '#94D2BD'],
+                    borderWidth: 0,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                size: 14,
+                                family: "'Inter', sans-serif"
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Typical Return Source for a Growth Stock',
+                        font: {
+                           size: 16,
+                           weight: 'bold',
+                           family: "'Inter', sans-serif"
+                        },
+                        padding: {
+                            top: 10,
+                            bottom: 20
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
